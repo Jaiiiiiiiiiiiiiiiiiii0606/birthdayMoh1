@@ -1,4 +1,5 @@
 export const birthdayData = {
+  siteUrl: 'https://happy-birthday-xi-green.vercel.app/',
   friendName: 'Mohit Singh Solanki',
   birthDate: '13 June 2005',
   /** Rabbit couple image URL (leave empty for default SVG illustration) */
