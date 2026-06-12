@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-inter: 'Inter', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+  --color-space-top: #12032b;
+  --color-space-bottom: #061c3f;
+  --color-neon-pink: #ff2d95;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-inter);
+  background: linear-gradient(180deg, #12032b, #061c3f);
+  color: #fff;
+}
+
+.font-heading {
+  font-family: var(--font-playfair);
+}
+
+.space-bg {
+  background: linear-gradient(180deg, #12032b, #061c3f);
+}
+
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 32px;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 80px rgba(100, 80, 200, 0.08);
+}
+
+.neon-btn {
+  background: linear-gradient(135deg, #ff2d95 0%, #e91e8c 50%, #ff2d95 100%);
+  box-shadow:
+    0 4px 24px rgba(255, 45, 149, 0.55),
+    0 0 48px rgba(255, 45, 149, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.neon-btn:hover:not(:disabled) {
+  transform: scale(1.03);
+  box-shadow:
+    0 6px 32px rgba(255, 45, 149, 0.65),
+    0 0 60px rgba(255, 45, 149, 0.35);
+}
+
+.neon-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.neon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ghost-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.rabbit-frame {
+  border: 3px solid rgba(255, 105, 180, 0.7);
+  box-shadow:
+    0 0 20px rgba(255, 45, 149, 0.5),
+    0 0 40px rgba(255, 45, 149, 0.2);
+}
+
+.paper-card {
+  background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+  border-radius: 24px;
+  color: #2a2a2a;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.letter-text,
+.letter-text span {
+  color: #3a3a3a;
+  font-family: var(--font-inter);
+}
+
+.rainbow-letter {
+  display: inline-block;
+}
+
+@keyframes candle-flicker {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.15);
+  }
+}
+
+.candle-flame {
+  transform-origin: center bottom;
+  animation: candle-flicker 0.5s ease-in-out infinite;
+}
