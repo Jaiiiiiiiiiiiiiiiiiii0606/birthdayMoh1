@@ -73,13 +73,13 @@ export function Screen14Final({ onReplay }: Screen14FinalProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
       >
-        {/* <NeonButton onClick={onReplay}>Replay</NeonButton> */}
-        {/* <button
+        <NeonButton onClick={onReplay}>Replay</NeonButton>
+        <button
           className="w-full py-3.5 px-6 rounded-full font-semibold text-lg text-white/90 ghost-btn"
           onClick={handleShare}
         >
           Share
-        </button> */}
+        </button>
       </motion.div>
     </motion.div>
   )
