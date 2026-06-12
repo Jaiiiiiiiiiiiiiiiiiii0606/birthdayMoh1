@@ -1,16 +1,17 @@
 export const birthdayData = {
-  friendName: 'Divya',
+  friendName: 'Mohit Singh Solanki',
+  birthDate: '13 June 2005',
   /** Rabbit couple image URL (leave empty for default SVG illustration) */
   rabbitCoupleImage: '',
   /** Profile/avatar image (optional) */
   profileImage: '',
   /** Birthday music URL or path in public/ */
   music: '',
-  message: `Happy Birthday to someone truly special!
+  message: `Happy Birthday Mohit!
 
 You are sweet,
-loyal,
-my rock,
+a true BFF,
+always there for me,
 and I am grateful to have you in my life.
 
 Thank you for every memory,
@@ -23,8 +24,11 @@ good health,
 and all the happiness in the world.
 
 Happy Birthday ❤️`,
-  /** Initial countdown values for Screen 1 */
-  countdownHours: 0,
-  countdownMinutes: 39,
-  countdownSeconds: 59,
+  bondWords: ['sweet 💗', 'BFFs ❤️', 'always there 🤍'],
+  /**
+   * Countdown targets midnight (12:00 AM) on this date each year.
+   * June 13 = Mohit's birthday.
+   */
+  countdownMonth: 6,
+  countdownDay: 13,
 }

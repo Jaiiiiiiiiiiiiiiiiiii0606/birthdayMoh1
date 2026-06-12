@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { birthdayData } from '../../config/birthdayData'
 
@@ -6,25 +6,46 @@ interface Screen1CountdownProps {
   onSkip: () => void
 }
 
+function getBirthdayMidnight(): Date {
+  const now = new Date()
+  const target = new Date(
+    now.getFullYear(),
+    birthdayData.countdownMonth - 1,
+    birthdayData.countdownDay,
+    0,
+    0,
+    0,
+    0,
+  )
+
+  if (now >= target) {
+    target.setFullYear(target.getFullYear() + 1)
+  }
+
+  return target
+}
+
+function getTimeLeft(target: Date) {
+  const diff = Math.max(0, target.getTime() - Date.now())
+  const hours = Math.floor(diff / (1000 * 60 * 60))
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+  return { hours, minutes, seconds, totalMs: diff }
+}
+
 export function Screen1Countdown({ onSkip }: Screen1CountdownProps) {
-  const [hours, setHours] = useState(birthdayData.countdownHours)
-  const [minutes, setMinutes] = useState(birthdayData.countdownMinutes)
-  const [seconds, setSeconds] = useState(birthdayData.countdownSeconds)
+  const target = getBirthdayMidnight()
+  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(target))
+
+  const tick = useCallback(() => {
+    setTimeLeft(getTimeLeft(target))
+  }, [target])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((s) => {
-        if (s > 0) return s - 1
-        setMinutes((m) => {
-          if (m > 0) return m - 1
-          setHours((h) => (h > 0 ? h - 1 : 0))
-          return 59
-        })
-        return 59
-      })
-    }, 1000)
+    tick()
+    const interval = setInterval(tick, 1000)
     return () => clearInterval(interval)
-  }, [])
+  }, [tick])
 
   const pad = (n: number) => String(n).padStart(2, '0')
 
@@ -53,7 +74,7 @@ export function Screen1Countdown({ onSkip }: Screen1CountdownProps) {
       </motion.p>
 
       <motion.h1
-        className="font-heading text-5xl sm:text-6xl font-extrabold mb-10 bg-gradient-to-r from-pink-400 via-purple-300 to-blue-400 bg-clip-text text-transparent"
+        className="font-heading text-4xl sm:text-5xl font-extrabold mb-2 bg-gradient-to-r from-pink-400 via-purple-300 to-blue-400 bg-clip-text text-transparent leading-tight"
         style={{ textShadow: '0 0 40px rgba(255,45,149,0.3)' }}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -61,6 +82,15 @@ export function Screen1Countdown({ onSkip }: Screen1CountdownProps) {
       >
         {birthdayData.friendName}
       </motion.h1>
+
+      <motion.p
+        className="text-white/40 text-xs mb-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        {birthdayData.birthDate}
+      </motion.p>
 
       <motion.p
         className="text-white/60 text-xs tracking-[0.2em] uppercase mb-6"
@@ -79,21 +109,21 @@ export function Screen1Countdown({ onSkip }: Screen1CountdownProps) {
       >
         <div className="text-center">
           <p className="font-heading text-4xl sm:text-5xl font-bold tabular-nums">
-            {pad(hours)}
+            {pad(timeLeft.hours)}
           </p>
           <p className="text-white/40 text-[10px] tracking-widest mt-1">HRS</p>
         </div>
         <span className="text-2xl text-white/30 font-light">:</span>
         <div className="text-center">
           <p className="font-heading text-4xl sm:text-5xl font-bold tabular-nums">
-            {pad(minutes)}
+            {pad(timeLeft.minutes)}
           </p>
           <p className="text-white/40 text-[10px] tracking-widest mt-1">MIN</p>
         </div>
         <span className="text-2xl text-white/30 font-light">:</span>
         <div className="text-center">
           <p className="font-heading text-4xl sm:text-5xl font-bold tabular-nums">
-            {pad(seconds)}
+            {pad(timeLeft.seconds)}
           </p>
           <p className="text-white/40 text-[10px] tracking-widest mt-1">SEC</p>
         </div>
